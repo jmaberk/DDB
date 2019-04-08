@@ -105,7 +105,7 @@ class plot(object):
         
 ######################################EI_reg###################################
 
-        strFile=pickle_location+"\\{:s}_{:d}_Single_ei_expandBoundsUCB.pickle".format(function_name,D)
+        strFile=pickle_location+"\\{:s}_{:d}_Single_ei_expandBoundsFiltering.pickle".format(function_name,D)
         with open(strFile) as f:
 
             EI = pickle.load(f)
