@@ -2,7 +2,7 @@
 """
 Name: real_experiment_functions.py
 Authors: Julian Berk and Vu Nguyen
-Publication date:16/04/2018
+Publication date:16/04/2019
 Description: These classes run real-world experiments that can be used to test
 our acquisition functions
 

@@ -1,11 +1,11 @@
 '''
 Name: bayesianOptimizationMaster.py
 Authors: Julian Berk and Vu Nguyen
-Publication date:16/04/2018
+Publication date:108/04/2019
 Inputs:None
 Outputs: Pickle files and plots containing the results from experiments run
 Description: The master file for code used to generate the results for the
-paper Exploration Enhanced Expected Improvement for Bayesian Optimization.
+paper Bayesian Optimisation in Unknown Bounded Search Domains.
 Most aspects of the algorithm can be altered from this file. See comments for
 more details
 '''
@@ -55,10 +55,10 @@ myfunction_list=[]
 #myfunction_list.append(functions.shubert())
 #myfunction_list.append(functions.schwefel(dim=4))
 #myfunction_list.append(functions.griewank(dim=3))
-myfunction_list.append(functions.branin())
+#myfunction_list.append(functions.branin())
 #myfunction_list.append(functions.dropwave())
 #myfunction_list.append(functions.sixhumpcamel())
-#myfunction_list.append(functions.hartmann_3d())
+myfunction_list.append(functions.hartmann_3d())
 #myfunction_list.append(functions.levy(dim=5))
 #myfunction_list.append(functions.ackley(input_dim=5))
 #myfunction_list.append(functions.alpine1(input_dim=5))
@@ -89,7 +89,7 @@ acq_type_list=[]
 
 temp={}
 temp['name']='ei'
-acq_type_list.append(temp)
+#acq_type_list.append(temp)
 
 temp={}
 temp['name']='ei_regularizerH'
@@ -108,7 +108,7 @@ bound_type_list=[]
 
 temp={}
 temp='fixed'
-#bound_type_list.append(temp)
+bound_type_list.append(temp)
 
 temp={}
 temp='expandBoundsDDB_MAP'
@@ -120,11 +120,11 @@ bound_type_list.append(temp)
 
 temp={}
 temp='volumeDoubling'
-#bound_type_list.append(temp)
+bound_type_list.append(temp)
 
 temp={}
 temp='expandBoundsFiltering'
-#bound_type_list.append(temp)
+bound_type_list.append(temp)
 
 ###############################################################################
 '''

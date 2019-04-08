@@ -1,7 +1,7 @@
 '''
 Name: plot_results.py
 Authors: Julian Berk and Vu Nguyen
-Publication date:16/04/2018
+Publication date:16/04/2019
 Inputs: #Pickle files produced by bayesianOptimizationMaster.py
         #function_name: The name of the function used in the experiment as
         defined in functions.py
