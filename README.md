@@ -2,7 +2,7 @@
 
 This code runs the Bayesian optimisation with the search space defined with the distribution derived boundary (DDB) method. It also runs other similar methods to compare performance. The paper describing the algorithm has been submitted for review to the ECML 2019 conference.
 
-NOTE: The code here is still being uploaded.
+NOTE: The code here is still being edited for clarity.
 
 
 ## System Requirements
