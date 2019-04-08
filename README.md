@@ -21,4 +21,4 @@ A quick example of the code is shown in example.py. This shows the optimization 
 ## Usage
 IMPORTANT: The pickle_location variable in bayesianOptimizationMaster.py must be changed to the location of your pickleStorage file for this code to run
 
-The file bayesianOptimizationMaster.py controls the rest of the code It is set up to run a basic 2D Gaussian mixture but instructions running other functions and altering other parameters are given as comments in the code between rows of hash symbols.
+The file bayesianOptimizationMaster.py controls the rest of the code It is set up to run a Hartmann 3D function but instructions running other functions and altering other parameters are given as comments in the code between rows of hash symbols.
