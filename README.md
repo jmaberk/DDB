@@ -16,7 +16,7 @@ We used the code on a windows 10 machine with Matlab R2015b and a Theano-based K
 Some code, including the real-world functions, are taken from previous works by Nguyen et al. These can be found here: https://github.com/ntienvu/ICDM2017_FBO and here: https://github.com/ntienvu/ICDM2016_B3O
 
 ## Example code
-A quick example of the code is shown in example.py. This shows the optimization of the two peak Gaussian mixture discussed in the paper.
+A quick example of the code is shown in example.py. This shows the optimization of the Hartmann 3D function.
 
 ## Usage
 IMPORTANT: The pickle_location variable in bayesianOptimizationMaster.py must be changed to the location of your pickleStorage file for this code to run
