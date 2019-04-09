@@ -89,7 +89,7 @@ acq_type_list=[]
 
 temp={}
 temp['name']='ei'
-#acq_type_list.append(temp)
+acq_type_list.append(temp)
 
 temp={}
 temp['name']='ei_regularizerH'
@@ -146,8 +146,7 @@ length 1 in each direction. If random_initial_bound=1 then it is placed
 randomly in the maximum search space.
 '''
 ###############################################################################
-seed=1
-#seed=np.random.randint(1,100) #1
+seed=np.random.randint(1,100) #1
 print("Seed of {} used".format(seed))
 
 for idx, (myfunction,acq_type,mybatch_type,) in enumerate(itertools.product(myfunction_list,acq_type_list,mybatch_type_list)):

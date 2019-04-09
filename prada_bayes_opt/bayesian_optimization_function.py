@@ -409,51 +409,52 @@ class PradaBayOptFn(object):
         return mean + np.sqrt(beta) * np.sqrt(var)
                       
     def expandBoundsFiltering(self):
+        """
+        Description: Expands the search space with filtering Bayesian
+        optimisation (FBO) by Nguyen et al.
+        """
         step=0.1*self.gp.lengthscale
         print('Attempting to expand search space with FBO method')
-        myopts ={'maxiter':3*self.dim,'maxfun':5*self.dim}
-        
-        #print("Initial search space: {}".format(self.scalebounds))
+        # Determine the unfiltered extension based on the iteration number
         extended_bound=np.copy(self.scalebounds)
         extention=math.pow(self.iteration_factor/(max([self.experiment_num,1])),(1/self.dim))
-       # print("iteration_factor={}, experiment_num={}, extention={}".format(self.iteration_factor,self.experiment_num, extention))
         old_radius=(extended_bound[:,1]-extended_bound[:,0])/2
         mid_point=extended_bound[:,0]+old_radius
         new_radius=old_radius*extention
-        #print("radius={}".format(new_radius))
         extended_bound[:,1]=mid_point+new_radius
         extended_bound[:,0]=mid_point-new_radius
-#        if (self.bb_function.name=="SVR_function")|(self.bb_function.name=="BayesNonMultilabelClassification")|(self.bb_function.name=="AlloyCooking_Profiling"):
-#            for d in range(0,self.dim):
-#                extended_bound[d,0]=max(extended_bound[d,0],self.bb_function.maxbounds[d,0])
-#                extended_bound[d,1]=min(extended_bound[d,1],self.bb_function.maxbounds[d,1])
-        print("bounds.shape={}".format(extended_bound.shape))
+        # Calculate the global maximum lower confidence bound
         lcb_x,lcb_y=acq_max_global(self.lcb, self.gp, extended_bound)
+        # Filter the lower and upper boundary up to the unfiltered extension
         for d in range(0,self.dim):
             #Upper bound
             x_boundry=np.max(self.X[d],axis=0)
             x_boundry_index=np.argmax(self.X[d],axis=0)
+            xb=self.X[x_boundry_index]
             ucb_y=self.ucb(self.X[x_boundry_index],self.gp)
-            while((ucb_y>lcb_y)&(x_boundry<extended_bound[d,1])):
+            while(((ucb_y>lcb_y)&(x_boundry<extended_bound[d,1]))|(x_boundry<self.scalebounds[d,1])):
                 x_boundry=x_boundry+step
-                ucb_y=self.ucb(self.X[x_boundry_index],self.gp)
+                xb[d]=xb[d]+step
+                ucb_y=self.ucb(xb,self.gp)
             extended_bound[d,1]=x_boundry
             #Lower bound
             x_boundry=np.min(self.X[d],axis=0)
             ucb_y=self.ucb(self.X[x_boundry_index],self.gp)
-            while((ucb_y>lcb_y)&(x_boundry>extended_bound[d,0])):
+            while(((ucb_y>lcb_y)&(x_boundry>extended_bound[d,0]))|(x_boundry>self.scalebounds[d,0])):
                 x_boundry=x_boundry-step
-                ucb_y=self.ucb(self.X[x_boundry_index],self.gp)
+                xb[d]=xb[d]-step
+                ucb_y=self.ucb(xb,self.gp)
             extended_bound[d,0]=x_boundry
                 
             self.scalebounds=extended_bound
-#        if (self.bb_function.name=="SVR_function")|(self.bb_function.name=="BayesNonMultilabelClassification")|(self.bb_function.name=="AlloyCooking_Profiling"):
-#            for d in range(0,self.dim):
-#                self.scalebounds[d,0]=max(self.scalebounds[d,0],self.bb_function.maxbounds[d,0])
-#                self.scalebounds[d,1]=min(self.scalebounds[d,1],self.bb_function.maxbounds[d,1])
+
         print("seach space extended to {}".format(self.scalebounds))
         
     def volumeDoubling(self):
+        """
+        Description: Expands the search space with the volume doubling method
+        by Shahriari et al
+        """
         print('Attempting to expand search space with volume doubling method')
         extended_bound=np.copy(self.scalebounds)
         old_radius=(extended_bound[:,1]-extended_bound[:,0])/2
@@ -489,7 +490,6 @@ class PradaBayOptFn(object):
             self.X_original=np.vstack((self.X_original, x_max))
             # evaluate Y using original X
             
-            #self.Y = np.append(self.Y, self.f(temp_X_new_original))
             self.Y_original = np.append(self.Y_original, self.f(x_max))
             
             # update Y after change Y_original

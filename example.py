@@ -120,10 +120,10 @@ for idx, (myfunction,acq_type,mybatch_type,) in enumerate(itertools.product(myfu
     
     num_initial_points=3*myfunction.input_dim+1 #2
     
-    iteration_factor=20 #3
+    iteration_factor=10 #3
     max_iterations=iteration_factor*myfunction.input_dim 
     
-    num_repeats=20 #4
+    num_repeats=10 #4
     
     GAP=[0]*num_repeats
     ybest=[0]*num_repeats
@@ -200,10 +200,10 @@ for idx, (myfunction,acq_type,mybatch_type,) in enumerate(itertools.product(myfu
     
     num_initial_points=3*myfunction.input_dim+1 #2
     
-    iteration_factor=20 #3
+    iteration_factor=10 #3
     max_iterations=iteration_factor*myfunction.input_dim 
     
-    num_repeats=20 #4
+    num_repeats=10 #4
     
     GAP=[0]*num_repeats
     ybest=[0]*num_repeats
