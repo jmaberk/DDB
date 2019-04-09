@@ -33,7 +33,7 @@ warnings.filterwarnings("ignore")
 The pickle_location variable below must be changed to the appropriate directory
 in your system for the code to work.
 '''
-pickle_location="D:\OneDrive\Documents\PhD\Code\Bayesian\DDB\pickleStorage"
+pickle_location="D:\your_path\DDB\pickleStorage"
 ###############################################################################
 '''
 Here the user can choose which functions to optimize. Just un-comment the 

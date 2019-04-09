@@ -12,8 +12,6 @@ import numpy as np
 from acquisition_functions import AcquisitionFunction, unique_rows
 from scipy.optimize import minimize
 
-#from sklearn.gaussian_process import GaussianProcess
-#from scipy.optimize import minimize
 from sklearn.metrics.pairwise import euclidean_distances
 from scipy.spatial.distance import pdist
 from scipy.spatial.distance import cdist
@@ -22,12 +20,9 @@ from sklearn.cluster import KMeans
 import scipy.linalg as spla
 import math
 
-#from scipy.linalg import lapack, blas
-#from scipy import linalg
-#from GPy.util.linalg import pdinv
+
 
 from scipy.spatial.distance import squareform
-#from sklearn.metrics.pairwise import pairwise_distances
 
 class PradaGaussianProcess(object):
     

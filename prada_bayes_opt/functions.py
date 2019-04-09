@@ -1,7 +1,7 @@
 '''
 Name: functions.py
 Authors: Julian Berk and Vu Nguyen
-Publication date:16/04/2018
+Publication date:08/04/2019
 Description: A range of benchmark and synthetic funtions to optimize with 
 Bayesian optimization
 '''
@@ -162,43 +162,32 @@ class fourier(functions):
 		X = X.reshape((len(X),1))
 		n = X.shape[0]
 		fval = X*np.sin(X)+X*np.cos(2*X)
-		fval=self.ismax*fval.reshape(n,1)
-###############################################################################        
-#       #Generates noise. Comment out between the hash lines to run in the
-#       #noiseless case
-#		if self.sd ==0:
-#			noise = np.zeros(n).reshape(n,1)
-#		else:
-#			noise = np.random.normal(0,0.1*self.sd,n).reshape(n,1)
-#		fval=fval+noise
-###############################################################################            
+		fval=self.ismax*fval.reshape(n,1)       
 		return fval
         
         
 class branin(functions):
     """
     Description: Function for BO method evaluation
-    Useage: must be initiated with a f=fourier() call. It can then be
+    Useage: must be initiated with a f=branin() call. It can then be
     evaluated with f.func(x) for the input x.
     Output: The function value at x
     """
     def __init__(self,sd=None):
 		self.input_dim=2
-		#if sd==None: self.sd = 0
-		#else: self.sd=sd
+
 		self.bounds=OrderedDict([('x1',(-5,10)),('x2',(0,15))])
-		#self.bounds=OrderedDict([('x1',(-20,70)),('x2',(-50,50))])
 		self.fmin=0.397887
 		self.min=[9.424,2.475]
 		self.ismax=-1
 		self.name='branin'
-		#def func(self,x1,x2):
+
 		self.sd=0
 		self.sd=self.findSdev()
     def func(self,X):
         
         X=np.asarray(X)
-        #print('X={}'.format(X))
+
         if len(X.shape)==1:
             x1=X[0]/max_bound_size
             x2=X[1]/max_bound_size
@@ -207,7 +196,7 @@ class branin(functions):
             x2=X[:,1]/max_bound_size
         x1=(x1*15-5)
         x2=(x2*15)
-        #print("x=({},{})".format(x1,x2))
+
         a=1
         b=5.1/(4*np.power(np.pi,2))
         c=5/np.pi
@@ -217,22 +206,14 @@ class branin(functions):
         fx=a*np.power(x2-b*x1*x1+c*x1-r,2)+s*(1-t)*np.cos(x1)+s    
         
         n=X.shape[0]
-        #print(fx*self.ismax)
         fval=fx*self.ismax
-###############################################################################        
-#       #Generates noise. Comment out between the hash lines to run in the
-#       #noiseless case
-#        noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-#        fval=fval+np.ravel(noise)
-###############################################################################
-            
         return fval
         
     
 class forrester(functions):
 	"""
 	Description: Function for BO method evaluation
-	Useage: must be initiated with a f=fourier() call. It can then be
+	Useage: must be initiated with a f=forrester() call. It can then be
 	evaluated with f.func(x) for the input x.
 	Output: The function value at x
 	"""
@@ -266,8 +247,6 @@ class rosenbrock(functions):
 		else: self.bounds = bounds
 		self.min = [(0, 0)]
 		self.fmin = 0
-		#if sd==None: self.sd = 0
-		#else: self.sd=sd
 		self.sd=0
 		self.ismax=-1
 		self.name = 'Rosenbrock'
@@ -287,12 +266,6 @@ class rosenbrock(functions):
 
 		fx = 100*(x2-x1**2)**2 + (x1-1)**2
 		fval=fx*self.ismax
-###############################################################################        
-#       #generates noise. comment out between the hash lines to run in the
-#       #noiseless case
-#		noise = np.random.normal(0,0.1*self.sd,n).reshape(n,1)
-#		fval=fval+np.ravel(noise)
-###############################################################################
 		return -fval
     
 
@@ -328,12 +301,6 @@ class beale(functions):
             x2=Xc[:,1]*2-1
         fval = (1.5-x1+x1*x2)**2+(2.25-x1+x1*x2**2)**2+(2.625-x1+x1*x2**3)**2
         fval=self.ismax*fval
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################
         return fval 
 			
 
@@ -369,12 +336,6 @@ class dropwave(functions):
             x2=Xc[:,1]*10.24-5.12
         fval = - (1+np.cos(12*np.sqrt(x1**2+x2**2))) / (0.5*(x1**2+x2**2)+2) 
         fval=self.ismax*fval
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################
         return -fval
 
 
@@ -392,8 +353,6 @@ class cosines(functions):
         self.min = [(0.31426205,  0.30249864)]
         self.fmin = -1.59622468
         self.ismax=1
-        #if sd==None: self.sd = 0
-        #else: self.sd=sd
         self.sd=self.findSdev()
         self.name = 'Cosines'
 
@@ -407,19 +366,11 @@ class cosines(functions):
         else:
             x1=X[:,0]
             x2=X[:,1]
-        #X = reshape(X,self.input_dim)
-        #n = X.shape[0]
         
         u = 1.6*x1-0.5
         v = 1.6*x2-0.5
         fval = 1-(u**2 + v**2 - 0.3*np.cos(3*np.pi*u) - 0.3*np.cos(3*np.pi*v) )
         fval = self.ismax*fval
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################
         return fval
             
             
@@ -463,12 +414,6 @@ class goldstein(functions):
         fact2 = 30 + fact2a*fact2b
         fval = fact1*fact2
         fval = self.ismax*fval
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################
         return fval
 
 
@@ -508,13 +453,7 @@ class sixhumpcamel(functions):
         term2 = x1*x2
         term3 = (-4+4*x2**2) * x2**2
         fval = term1 + term2 + term3
-        fval = self.ismax*fval
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################        
+        fval = self.ismax*fval       
         return -fval
 
 
@@ -547,13 +486,7 @@ class mccormick(functions):
         term3 = -1.5*x1
         term4 = 2.5*x2
         fval = term1 + term2 + term3 + term4 + 1
-        fval = self.ismax*fval
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################  
+        fval = self.ismax*fval 
         return self.ismax*fval
 
 
@@ -585,31 +518,23 @@ class powers(functions):
             x2 = (x[:,1]*2-1)/max_bound_size
             fval = abs(x1)**2 + abs(x2)**3
             fval = fval.reshape(n,1)
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################  
             return fval
 
 class eggholder(functions):
     """
     Description: Function for BO method evaluation
-    Useage: must be initiated with a f=goldstein() call. It can then be
+    Useage: must be initiated with a f=eggholder() call. It can then be
     evaluated with f.func(x) for the input x.
     Output: fval, the function value at x
     """
     def __init__(self,bounds=None):
         self.input_dim = 2
-        #self.bounds = {'x1':(-512,512),'x2':(-512,512)}
         self.bounds = [(-512,512),(-512,512)]
         self.sd=0
         self.min = [(512,404.2319)]
         self.fmin = -959.6407
         self.ismax=-1
-		 #if sd==None: self.sd = 0
-		 #else: self.sd=sd
+
         self.name = 'egg-holder'
         self.sd=self.findSdev()
         
@@ -619,64 +544,12 @@ class eggholder(functions):
         Xc = reshape(Xc,self.input_dim)
         Xc=Xc/max_bound_size
 
-        #x1=X[:,0]
-        #x2=X[:,1]
+
         x1=Xc[:,0]*1024-512
         x2=Xc[:,1]*1024-512
         fval = -(x2+47) * np.sin(np.sqrt(abs(x2+x1/2+47))) + -x1 * np.sin(np.sqrt(abs(x1-(x2+47))))
         fval = self.ismax*fval
-        n=1
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################  
         return -fval
-
-class eggholder_scaled(functions):
-    """
-    Description: Function for BO method evaluation
-    Useage: must be initiated with a f=goldstein() call. It can then be
-    evaluated with f.func(x) for the input x.
-    Output: fval, the function value at x
-    """
-    def __init__(self,bounds=None):
-        self.input_dim = 2
-        #self.bounds = {'x1':(-512,512),'x2':(-512,512)}
-        self.bounds = [(-512,512),(-512,512)]
-        self.sd=0
-        self.min = [(512,404.2319)]
-        self.fmin = -959.6407
-        self.ismax=-1
-		 #if sd==None: self.sd = 0
-		 #else: self.sd=sd
-        self.name = 'egg-holder scaled'
-        self.sd=self.findSdev()
-        
-
-    def func(self,X):
-        X = reshape(X,self.input_dim)
-        if X.ndim==2:
-            X[:,0]=X[:,0]*0.95
-            X[:,1]=X[:,1]*0.95
-        if X.ndim==1:
-            X[0]=X[0]*0.95
-            X[1]=X[1]*0.95
-        #x1=X[:,0]
-        #x2=X[:,1]
-        x1=X[:,0]
-        x2=X[:,1]
-        fval = -(x2+47) * np.sin(np.sqrt(abs(x2+x1/2+47))) + -x1 * np.sin(np.sqrt(abs(x1-(x2+47))))
-        fval = self.ismax*fval
-        n=1
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################  
-        return fval
 
 
 class alpine1(functions):
@@ -707,20 +580,14 @@ class alpine1(functions):
 		
     def func(self,X):
         Xc = (np.copy(reshape(X,self.input_dim))/max_bound_size)*20-10
-        #n = X.shape[0]
+
         temp=(Xc*np.sin(Xc) + 0.1*Xc)
         if len(temp.shape)<=1:
             fval=np.sum(temp)
         else:
             fval = np.sum(temp,axis=1)
-        n=1
         fval = self.ismax*fval
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################         
+   
         return fval
 
 
@@ -755,15 +622,8 @@ class alpine2(functions):
     def func(self,X):
         Xc=np.copy(X)
         Xc = (reshape(Xc,self.input_dim)/max_bound_size)*10
-        n=1
         fval=[self.ismax*self.internal_func(val) for idx, val in enumerate(Xc)]
-        fval=np.asarray(fval)
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################    
+        fval=np.asarray(fval) 
         return fval
 
 class gSobol:
@@ -797,12 +657,6 @@ class gSobol:
         aux = (abs(4*X-2)+np.ones(n).reshape(n,1)*self.a)/(1+np.ones(n).reshape(n,1)*self.a)
         fval =  np.cumprod(aux,axis=1)[:,self.input_dim-1]
         fval = self.ismax*fval
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################    
         return self.ismax*fval
 
 #####
@@ -836,12 +690,6 @@ class ackley(functions):
         Xc = Xc*65.536-32.768
         fval = (20+np.exp(1)-20*np.exp(-0.2*np.sqrt((Xc**2).sum(1)/self.input_dim))-np.exp(np.cos(2*np.pi*Xc).sum(1)/self.input_dim))
         fval = self.ismax*fval
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-############################################################################### 
       
         return fval
 
@@ -911,11 +759,6 @@ class hartmann_6d(functions):
 
             fval[idx] = -(2.58 + outer) / 1.94;
             noise=0
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-############################################################################### 
       
         if n==1:
             return self.ismax*(fval[0][0])+noise
@@ -985,11 +828,6 @@ class hartmann_4d:
                 outer = outer + new
             fval[idx] = (1.1 - outer) / 0.839;
         noise=0
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-############################################################################### 
         if n==1:
             return self.ismax*(fval[0][0])+noise
         else:
@@ -1060,11 +898,6 @@ class hartmann_3d(functions):
 
             fval[idx] = -outer;
         noise=0
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-############################################################################### 
         if n==1:
             return self.ismax*(fval[0][0])+noise
         else:
@@ -1099,12 +932,6 @@ class doubleGaussian(functions):
         y1=multivariate_normal.pdf(X,mean=0.7*np.ones(self.input_dim),cov=0.01*np.eye(self.input_dim))
         y2=multivariate_normal.pdf(X,mean=0.1*np.ones(self.input_dim),cov=0.001*np.eye(self.input_dim))
         fval=y1+y2
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-############################################################################### 
         return fval
     
     
@@ -1137,12 +964,6 @@ class gaussianMixtureExt(functions):
         y1=1.75*multivariate_normal.pdf(X,mean=0.75*np.ones(self.input_dim),cov=0.1*np.eye(self.input_dim)/max_bound_size)
         y2=0.75*multivariate_normal.pdf(X,mean=0.5*np.ones(self.input_dim),cov=0.05*np.eye(self.input_dim)/max_bound_size)
         fval=y1+y2
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-############################################################################### 
         return fval
     
 class schwefel(functions):
@@ -1176,11 +997,6 @@ class schwefel(functions):
             fval=418.9829*self.input_dim-np.sum(Xc*np.sin(np.sqrt(np.abs(Xc))),axis=1)
         else:
             fval=418.9829-Xc*np.sin(np.sqrt(np.abs(Xc)))
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-############################################################################### 
         return fval
 
 class shubert(functions):
@@ -1217,12 +1033,6 @@ class shubert(functions):
             y1+=i*np.cos((i+1)*Xc[:,0]+i)
             y2+=i*np.cos((i+1)*Xc[:,1]+i)
         fval=y1+y2
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-############################################################################### 
         return -fval  
 
 class franke(functions):
@@ -1254,13 +1064,7 @@ class franke(functions):
         fval=0.75*np.exp(-np.square(9*X[:,0]-2)/4-np.square(9*X[:,1]-2)/4)
         fval+=0.75*np.exp(-np.square(9*X[:,0]+1)/49-(9*X[:,1]+1)/10)
         fval+=0.75*np.exp(-np.square(9*X[:,0]-7)/4-np.square(9*X[:,1]-3)/4)
-        fval-=0.2*np.exp(-np.square(9*X[:,0]-4)-np.square(9*X[:,1]-7))
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-############################################################################### 
+        fval-=0.2*np.exp(-np.square(9*X[:,0]-4)-np.square(9*X[:,1]-7)) 
         return fval 
 
 class griewank(functions):
@@ -1294,19 +1098,13 @@ class griewank(functions):
             fval=np.sum(np.square(Xc)/4000,axis=1)-np.prod(np.cos(Xc/np.sqrt(np.arange(1,self.input_dim+1))),axis=1)+1
         else:
             fval=np.square(Xc)/4000-np.cos(Xc)+1
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-############################################################################### 
         return fval
     
 class levy(functions):
     """
     Description: Shubert function described in the paper. 
     Used for BO method evaluation.
-    Useage: must be initiated with a f=schwefel() call. It can then be
+    Useage: must be initiated with a f=levy() call. It can then be
     evaluated with f.func(x) for the input x.
     Output: fval, the function value at x
     """
@@ -1341,11 +1139,5 @@ class levy(functions):
             fval=np.square(np.sin(math.pi*(1+(Xc[:]-1/4))))
             w=1+(Xc[:]-1)/4
             fval+=np.square(w-1)*(1+10*np.square(np.sin(math.pi*w+1)))
-###############################################################################        
-        ##Generates noise. Comment out between the hash lines to run in the
-        ##noiseless case
-        #noise = np.random.normal(0,0.1*self.sd,1).reshape(1,1)
-        #fval=fval+np.ravel(noise)
-###############################################################################
         return fval
     

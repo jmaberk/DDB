@@ -1,7 +1,7 @@
 '''
 Name: plot_results.py
 Authors: Julian Berk and Vu Nguyen
-Publication date:16/04/2019
+Publication date:08/04/2019
 Inputs: #Pickle files produced by bayesianOptimizationMaster.py
         #function_name: The name of the function used in the experiment as
         defined in functions.py
@@ -103,7 +103,7 @@ class plot(object):
 
 ######################################Regularised#END##########################
         
-######################################EI_reg###################################
+######################################Filtering################################
 
         strFile=pickle_location+"\\{:s}_{:d}_Single_ei_expandBoundsFiltering.pickle".format(function_name,D)
         with open(strFile) as f:
@@ -124,7 +124,9 @@ class plot(object):
             myYbest=myYbest*np.ones(x_axis.shape)
         plt.errorbar(x_axis,-myYbest,yerr=myStd/np.sqrt(10),linewidth=mylinewidth,color='black',linestyle=':',marker='h', label='FBO')
 
-######################################EI_reg#######################################         
+####################################Filtering#END##############################   
+        
+#################################Volume#doubling###############################
         strFile=pickle_location+"\\{:s}_{:d}_Single_ei_volumeDoubling.pickle".format(function_name,D)
         with open(strFile) as f:
 
@@ -142,9 +144,9 @@ class plot(object):
         myStd=myStd*std_scale
 
         plt.errorbar(x_axis,-myYbest,yerr=myStd/np.sqrt(10),linewidth=mylinewidth,color='red',linestyle=':',marker='h', label='Volume doubling')
-######################################EI#END###################################
+#################################Volume#doubling#END###########################
 
-######################################EI_reg#######################################         
+################################DDB#MAP########################################         
         strFile=pickle_location+"\\{:s}_{:d}_Single_ei_expandBoundsDDB_MAP.pickle".format(function_name,D)
         with open(strFile) as f:
 
@@ -162,8 +164,9 @@ class plot(object):
         myStd=myStd*std_scale
 
         plt.errorbar(x_axis,-myYbest,yerr=myStd/np.sqrt(10),linewidth=mylinewidth,color='purple',linestyle='-',marker='h', label='DDB-MAP')
+################################DDB#MAP#END####################################
 		
-######################################EI_reg#######################################         
+################################DDB#FB#########################################        
         strFile=pickle_location+"\\{:s}_{:d}_Single_ei_expandBoundsDDB_FB.pickle".format(function_name,D)
         with open(strFile) as f:
 
@@ -181,14 +184,12 @@ class plot(object):
         myStd=myStd*std_scale
 
         plt.errorbar(x_axis,-myYbest,yerr=myStd/np.sqrt(10),linewidth=mylinewidth,color='brown',linestyle='-',marker='h', label='DDB-FB')
-		
+################################DDB#FB#END#####################################
 
         #The code below can be used to change the plot settings
         plt.ylabel('Best Found Value',fontdict={'size':22})
         plt.xlabel('Iteration',fontdict={'size':22})
         plt.legend(loc='top right',prop={'size':20})
-        #plt.xlim([3,10*D+1])
-        #plt.ylim([y_optimal_value-0.001,0.05])
         
         strTitle="{:s} D={:d}".format(function_name,D)
         plt.title(strTitle,fontdict={'size':28})
