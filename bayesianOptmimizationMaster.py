@@ -71,11 +71,6 @@ myfunction_list.append(functions.hartmann_3d())
 #myfunction_list.append(real_experiment_function.SVR_function())
 #myfunction_list.append(real_experiment_function.AlloyCooking_Profiling())
 #myfunction_list.append(real_experiment_function.AlloyCooking_Profiling_3Steps())
-#myfunction_list.append(real_experiment_function.Robot_BipedWalker())
-#myfunction_list.append(real_experiment_function.DeepLearning_MLP_MNIST())
-#myfunction_list.append(real_experiment_function.DeepLearning_MLP_MNIST_5D())
-#myfunction_list.append(real_experiment_function.BayesNonMultilabelClassification())
-#myfunction_list.append(real_experiment_function.BayesNonMultilabelClassificationEnron())
 
 ###############################################################################
 '''
