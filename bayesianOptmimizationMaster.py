@@ -1,7 +1,7 @@
 '''
 Name: bayesianOptimizationMaster.py
 Authors: Julian Berk and Vu Nguyen
-Publication date:108/04/2019
+Publication date:08/04/2019
 Inputs:None
 Outputs: Pickle files and plots containing the results from experiments run
 Description: The master file for code used to generate the results for the
