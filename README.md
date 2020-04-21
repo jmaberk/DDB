@@ -1,6 +1,6 @@
 # DDB
 
-This code runs the Bayesian optimisation with the search space defined with the distribution derived boundary (DDB) method. It also runs other similar methods to compare performance. The paper describing the algorithm has been submitted for review to Knowledge Based Systems.
+This code runs the Bayesian optimisation with the search space defined with the distribution derived boundary (DDB) method. It also runs other similar methods to compare performance. The paper describing the algorithm has been published in Knowledge Based Systems and can be found here: https://www.sciencedirect.com/science/article/abs/pii/S095070512030099X
 
 NOTE: The code here is still being edited for clarity.
 
